@@ -10,8 +10,23 @@ $banned = [
     'find' => 'find', 'locate' => 'locate',
     ' ' => 'space', "\t" => 'tab', "\n" => 'newline', "\v" => 'vertical tab',
     '&&' => '&&', '||' => '||', '|' => '|',
-    '*' => '*', '<' => '<', '{,' => '{,', '$IFS$9' => '$IFS$9'
+    '*' => '*', '<' => '<', '{,' => '{,', '$IFS$9' => '$IFS$9',
+    'env' => 'env', 'printenv' => 'printenv', 'set' => 'set', 'export' => 'export',
+    'phpinfo' => 'phpinfo', 'php -i' => 'php -i', 'php -r' => 'php -r',
+    'proc/self' => 'proc/self',
+    'more' => 'more', 'less' => 'less', 'sort' => 'sort',
+    'od' => 'od', 'xxd' => 'xxd', 'strings' => 'strings',
+    'sed' => 'sed', 'awk' => 'awk', 'grep' => 'grep', 'rev' => 'rev',
+    'python3 -c' => 'python3 -c',
 ];
+$banned["\$'\\x20'"] = "\$'\\x20'";
+$banned["\$'\\040'"] = "\$'\\040'";
+$banned['-al'] = '-al';
+$banned['-la'] = '-la';
+$banned['$IFS-l'] = '$IFS-l';
+$banned['$IFS-a'] = '$IFS-a';
+$banned['${IFS}-l'] = '${IFS}-l';
+$banned['${IFS}-a'] = '${IFS}-a';
 $encoded = [
     '%2e%2e%2f' => '../', '%2e%2e%2e%2f%2e%2f' => '..././', '%2e%2e%2e%2e%2f%2f' => '....//',
     '%0a' => 'newline', '%0b' => 'vertical tab', '%09' => 'tab'
