@@ -1,7 +1,6 @@
 <?php
 error_reporting(0);
-$cmd = $_GET['cmd'] ?? '';
-$raw = $_SERVER['QUERY_STRING'] ?? '';
+$cmd = $_POST['cmd'] ?? '';
 $blocked = '';
 
 $banned = [
@@ -27,21 +26,12 @@ $banned['$IFS-l'] = '$IFS-l';
 $banned['$IFS-a'] = '$IFS-a';
 $banned['${IFS}-l'] = '${IFS}-l';
 $banned['${IFS}-a'] = '${IFS}-a';
-$encoded = [
-    '%2e%2e%2f' => '../', '%2e%2e%2e%2f%2e%2f' => '..././', '%2e%2e%2e%2e%2f%2f' => '....//',
-    '%0a' => 'newline', '%0b' => 'vertical tab', '%09' => 'tab'
-];
 
 foreach ($banned as $pat => $label) {
     if (stripos($cmd, $pat) !== false) { $blocked = $label; break; }
 }
-if ($blocked === '') {
-    foreach ($encoded as $pat => $label) {
-        if (stripos($raw, $pat) !== false) { $blocked = $label; break; }
-    }
-}
 
-if (isset($_GET['ajax'])) {
+if (isset($_POST['ajax'])) {
     if ($blocked !== '') {
         echo '<span class="banned-msg">✖ ' . htmlspecialchars($blocked) . ' is banned</span>';
     } else {
@@ -138,7 +128,7 @@ if (isset($_GET['ajax'])) {
                 <h1>Hidden Leaf <span class="en">// terminal</span></h1>
             </div>
             <div class="subtitle"><span class="en">Ichiraku Ramen</span></div>
-            <form id="cmdForm">
+            <form id="cmdForm" method="post">
                 <input type="text" id="cmdInput" placeholder=">" autofocus>
                 <input type="submit" value="run">
             </form>
@@ -180,7 +170,7 @@ if (isset($_GET['ajax'])) {
             promptLine.textContent = '🍥 naruto:~$ ' + cmd;
             outputArea.innerHTML = '<span style="color:#999">running...</span>';
             resultArea.style.display = 'block';
-            fetch('?' + new URLSearchParams({cmd: cmd, ajax: 1}))
+            fetch('', {method: 'POST', headers: {'Content-Type': 'application/x-www-form-urlencoded'}, body: 'cmd=' + encodeURIComponent(cmd) + '&ajax=1'})
                 .then(function(r) { return r.text(); })
                 .then(function(html) {
                     outputArea.innerHTML = html;
