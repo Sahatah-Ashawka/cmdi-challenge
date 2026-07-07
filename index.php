@@ -8,7 +8,7 @@ $blocked = '';
 $banned = [
     '../' => '../', '..././' => '..././', '....//' => '....//',
     'head' => 'head', 'tail' => 'tail', 'cat' => 'cat', 'tac' => 'tac',
-    'find' => 'find', 'locate' => 'locate',
+    'find' => 'find', 'locate' => 'locate', 'paste' => 'paste'
     ' ' => 'space', "\t" => 'tab', "\n" => 'newline', "\v" => 'vertical tab',
     '&&' => '&&', '||' => '||', '|' => '|',
     '*' => '*', '<' => '<', '{,' => '{,', '$IFS$9' => '$IFS$9',
