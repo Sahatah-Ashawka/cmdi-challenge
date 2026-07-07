@@ -2,7 +2,7 @@ FROM php:8.2-apache
 
 COPY .htaccess /var/www/html/.htaccess
 COPY index.php /var/www/html/.index.php
-COPY flag.txt /flag.txt
+COPY 50m37h1n9.txt /50m37h1n9.txt
 COPY naruto.jpg /var/www/html/naruto.jpg
 COPY images.jpg /var/www/html/images.jpg
 COPY bgm.mp3 /var/www/html/bgm.mp3
